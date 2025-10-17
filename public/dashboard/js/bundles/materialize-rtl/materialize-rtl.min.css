@@ -5789,7 +5789,7 @@ input:not([type]) + label:after, input[type=text]:not(.browser-default) + label:
 
 .input-field {
     position: relative;
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
     margin-bottom: 1rem
 }
 

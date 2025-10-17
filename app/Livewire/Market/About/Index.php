@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Livewire\Market\About;
+
+use Livewire\Component;
+
+class Index extends Component
+{
+    public function render()
+    {
+        return view('livewire.market.about.index')->layout('layouts.market');
+    }
+}

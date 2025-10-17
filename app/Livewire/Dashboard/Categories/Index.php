@@ -4,9 +4,11 @@ namespace App\Livewire\Dashboard\Categories;
 
 use App\Models\Category;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Index extends Component
 {
+    use WithFileUploads;
     public string $title_page;
     public Category $dataModel;
     public bool $editMode= false;
@@ -17,6 +19,9 @@ class Index extends Component
     public $description;
     public $title;
     public $slug;
+    public $id;
+    public $image;
+    public $parent_id;
 
     public function mount(Category $dataModel)
     {
@@ -28,10 +33,129 @@ class Index extends Component
     {
         $this->IsFillter=true;
     }
+    protected function rules()
+    {
+        return [
+            'title' => 'required|string|min:3|max:255',
+            'slug' => 'required|string|alpha_dash|unique:categories,slug',
+            'description' => 'required|string|min:10',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ];
+    }
+
+    protected $messages = [
+        'title.required' => 'وارد کردن عنوان الزامی است.',
+        'title.string' => 'عنوان باید متن باشد.',
+        'title.min' => 'عنوان نباید کمتر از ۳ کاراکتر باشد.',
+        'title.max' => 'عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد.',
+
+        'slug.required' => 'وارد کردن اسلاگ الزامی است.',
+        'slug.string' => 'اسلاگ باید متن باشد.',
+        'slug.alpha_dash' => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
+        'slug.unique' => 'این اسلاگ قبلاً استفاده شده است.',
+
+        'description.required' => 'وارد کردن توضیحات الزامی است.',
+        'description.string' => 'توضیحات باید متن باشد.',
+        'description.min' => 'توضیحات نباید کمتر از ۱۰ کاراکتر باشد.',
+
+        'image.required' => 'آپلود تصویر الزامی است.',
+        'image.image' => 'فایل انتخابی باید تصویر باشد.',
+        'image.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
+        'image.max' => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
+    ];
+
+    public function change_status($id)
+    {
+        $data=$this->dataModel->find($id);
+        if ($data->status){
+            $data->update(['status'=>0]);
+        }else{
+            $data->update(['status'=>1]);
+        }
+        $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
+
+    }
+
+    public function resetModal()
+    {
+        $this->reset(['title','slug','image','parent_id','description','id']);
+        $this->dispatch('close_modal');
+    }
+
+    public function resetData()
+    {
+        $this->reset(['title','slug','image','parent_id','description','id']);
+        $this->dispatch('reset_modal_data');
+
+    }
+
+
+    public function set_item($id)
+    {
+        $data=$this->dataModel->find($id);
+        $this->title=$data->title;
+        $this->id=$data->id;
+        $this->image=$data->image;
+        $this->slug=$data->slug;
+        $this->parent_id=$data->parent_id;
+        $this->description=$data->description;
+        $this->dispatch('update_item');
+
+    }
+
+    public function UpdatedTitle()
+    {
+        if (!$this->id){
+            $this->slug=str_replace(' ','-',$this->title);
+        }
+    }
+    public function remove_item($id)
+    {
+        $data=$this->dataModel->find($id);
+        if ($data){
+            $data->delete();
+            $this->dispatch('alert',message:'آیتم با موفقیت حذف شد');
+
+        }
+    }
 
     public function create()
     {
-        dd($this->description,$this->title,$this->slug);
+        if ($this->id){
+            return $this->updateItem();
+        }else{
+            return $this->createItem();
+
+        }
+    }
+    public function createItem()
+    {
+        $validated = $this->validate();
+        $validated['image'] = $this->image->store('uploads/categories', 'public');
+        $validated['order'] = Category::max('order')+1;
+        Category::create($validated);
+        $this->resetModal();
+        $this->dispatch('alert',message:'آیتم با موفقیت ایجاد شد');
+    }
+
+    public function updateItem()
+    {
+        $validated = $this->validate([
+            'title' => 'required|string|min:3|max:255',
+            'slug' => 'required|string|alpha_dash|unique:categories,slug,'.$this->id,
+            'description' => 'required|string|min:10',
+            'image' => 'required',
+            'parent_id' => 'nullable',
+        ]);
+
+        if (isset($validated['image']) && !is_string($validated['image'])) {
+            $validated['image'] = $this->image->store('uploads/categories', 'public');
+        }
+        Category::find($this->id)->update($validated);
+        $this->resetModal();
+        $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
+
+
     }
     public function render()
     {
