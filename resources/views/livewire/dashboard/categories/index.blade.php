@@ -1,235 +1,252 @@
 <div>
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="d-flex justify-content-between align-items-center p-4">
-                    <h5>{{$title_page ?? 'UNKNOW'}}</h5>
-
-                    <div class="btns-table d-flex gap-2">
-                        <button wire:click="resetData()" data-toggle="modal" data-target="#create" type="button" class="btn-hover btn-sm btn-border-radius color-5">ایجاد دسته بندی</button>
-                        <a href="{{route('categories.trash')}}" class="btn-hover btn-sm btn-border-radius color-4">سطل آشغال</a>
+    @section('breadcrumb')
+        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+            <h1 class="page-title fw-semibold fs-18 mb-0">Categories</h1>
+            <div class="ms-md-1 ms-0">
+                <nav>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active" aria-current="page">Categories</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    @endsection
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">
+                        Categories Item
+                    </div>
+                    <div class="prism-toggle">
+                        <button wire:click="resetData()" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" class="btn btn-sm btn-success-light">Create New Category<i class="ri-plus ms-2 d-inline-block align-middle"></i></button>
+                        <button class="btn btn-sm btn-warning-light">Trash<i class="ri-delete ms-2 d-inline-block align-middle"></i></button>
                     </div>
                 </div>
-                <hr>
-                <div class="body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نام دسته</th>
-                            <th>وضعیت دسته</th>
-                            <th>عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php($counter=1)
-                        @foreach($data ?? [] as $item)
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
                             <tr>
-                                <th scope="row">{{$counter}}</th>
-                                <td>{{$item->title}}</td>
-                                <td>
-                                    @if($item->status)
-                                        <span wire:click="change_status({{$item->id}})" class="cursor-pointer label l-bg-green shadow-style">فعال</span>
-                                    @else
-                                        <span wire:click="change_status({{$item->id}})" class="cursor-pointer label l-bg-red shadow-style">غیرفعال</span>
-
-                                    @endif
-                                </td>
-                                <td>
-                                    <button data-toggle="modal" data-target="#create" wire:click="set_item({{$item->id}})" class="btn tblActnBtn">
-                                        <i class="material-icons">mode_edit</i>
-                                    </button>
-                                    <button wire:click="remove_item({{$item->id}})" class="btn tblActnBtn">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </td>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @php($counter=1)
+                            @foreach($data ?? [] as  $item)
+                                <tr>
+                                    <th scope="row">{{$counter}}</th>
+                                    <td>{{$item->title}}</td>
+                                    <td>
+                                        @if($item->status)
+                                            <span wire:click="change_status({{$item->id}})" style="cursor: pointer" class=" badge bg-outline-success">ACTIVE</span>
+                                        @else
+                                            <span wire:click="change_status({{$item->id}})" style="cursor: pointer" class=" badge bg-outline-danger">INACTIVE</span>
+
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="hstack gap-2 flex-wrap">
+                                            <a data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" wire:click="set_item({{$item->id}})"  class="text-info fs-14 lh-1"><i
+                                                    class="ri-edit-line"></i></a>
+                                            <a  wire:click="remove_item({{$item->id}})"  href="javascript:void(0);" class="text-danger fs-14 lh-1"><i
+                                                    class="ri-delete-bin-5-line"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @php($counter++)
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="create" tabindex="-1" role="dialog"
-         aria-labelledby="formModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content modal-create">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="formModal">{{$this->editMode ? 'ویرایش دسته بندی' : 'ساخت دسته بندی'}}</h5>
-                    <button id="close_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="title">عنوان دسته بندی</label>
-                            <input type="text" id="title" wire:model.lazy="title"
-                                   class="form-control "
-                                   placeholder="عنوان دسته بندی را وارد کنید">
-                            @error('title')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="slug">آدرس دسته بندی</label>
-                            <input type="text" id="slug" wire:model.lazy="slug"
-                                   class="form-control "
-                                   placeholder="آدرس دسته بندی را وارد کنید">
-                            @error('slug')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">توضیحات دسته بندی</label>
-                            <div wire:ignore>
-                                <div id="description"></div>
-                            </div>
-                            @error('description')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label>تصویر دسته بندی</label>
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>فایل</span>
-                                    <input wire:model.lazy="image" type="file">
+        <div wire:ignore.self class="modal fade"  id="modaldemo8">
+            <div class="modal-dialog modal-dialog-centered text-center  modal-xl" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">{{$this->editMode ? 'Update Category' : 'Create Category'}}</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-start">
+                        <form>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <p class="mb-2 text-muted">Category Title</p>
+                                    <input id="title" wire:model.lazy="title" type="text" class="form-control" placeholder="Enter Title">
+                                    @error('title')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <p class="mb-2 text-muted">Category Slug</p>
+                                    <input id="slug" wire:model.lazy="slug" type="text" class="form-control" placeholder="Enter slug">
+                                    @error('slug')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('image')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <label for="input-file" class="form-label">Image</label>
+                                    <input wire:model.lazy="image" class="form-control" type="file" id="input-file">
+                                    @error('image')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <div wire:ignore>
+                                        <label for="input-file" class="form-label">Parent Category</label>
+                                        <select  class="form-control"  name="choices-single-default" id="select">
+                                            <option  value="">Select Category</option>
+                                            @foreach(\App\Models\Category::whereNull('parent_id')->pluck('title','id') ?? [] as $key => $item)
+                                                <option  value="{{$key}}">{{$item}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                    <div wire:ignore>
+                                        <label for="input-file" class="form-label">Description Category</label>
+                                        <div id="editor">{!! $description ?? '' !!}</div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
-                        </div>
-
-                        <div wire:ignore class="form-group">
-                            <label>دسته والد</label>
-                            <div wire:ignore class="input-field ">
-                                <select id="select" onchange="@this.set('parent_id',this.value)">
-                                    <option value="" disabled selected>گزینه خود را انتخاب کنید</option>
-                                    @foreach(\App\Models\Category::whereNull('parent_id')->pluck('title','id') ?? [] as $key => $item)
-                                        <option value="{{$key}}">{{$item}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button wire:click="create()" type="button" class="btn-hover btn-sm btn-border-radius color-5">ذخیره</button>
-                    <button wire:click="resetModal()" type="button" class="btn-hover btn-sm btn-border-radius color-2">بستن</button>
-
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button wire:click="create()" class="btn btn-primary" >Save changes</button>
+                        <button wire:click="resetModal()" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@section('styles')
-        <link href="{{asset('dashboard/css/quill.snow.css')}}" rel="stylesheet">
-        <link {{asset('dashboard/js/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}} rel="stylesheet" />
+        @section('styles')
+                    <link rel="stylesheet" href="{{asset('dashboard')}}/libs/quill/quill.snow.css">
+                    <link rel="stylesheet" href="{{asset('dashboard')}}/libs/quill/quill.bubble.css">
+         @endsection
+        @section('scripts')
+                    <script src="{{asset('dashboard')}}/libs/quill/quill.min.js"></script>
+                     <script>
+                    document.addEventListener("livewire:initialized", () => {
+                        const selectEl = document.getElementById('select');
+                        const choices = new Choices(selectEl, { searchEnabled: false, itemSelectText: '' });
 
- @endsection
-@section('scripts')
-        <script src="{{asset('dashboard/js/quill.js')}}"></script>
-        <script src="{{asset('dashboard/js/pages/forms/basic-form-elements.js')}}"></script>
-        <script>
-            let quill; // 🔑 اینجا global تعریف کن
-            $('select').formSelect();
-            document.addEventListener('livewire:initialized', function () {
-                const toolbarOptions = [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
-                    ['link', 'image'],
-                    [{ 'direction': 'rtl' }],
-                    [{ 'size': ['small', false, 'large', 'huge'] }],
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                    [{ 'align': [] }],
-                    ['clean']
-                ];
-
-                quill = new Quill('#description', {
-                    modules: {
-                        toolbar: toolbarOptions,
-                    },
-                    placeholder: 'توضیحات خود راوارد کنید...',
-                    theme: 'snow'
-                });
-
-                quill.on('text-change', function() {
-                    let html = quill.root.innerHTML;
-                @this.set('description', html);
-                });
-
-                function imageHandler() {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.click();
-                    input.onchange = () => {
-                        var file = input.files[0];
-                        if (/^image\//.test(file.type)) {
-                            // آپلود به سرور
-                            var formData = new FormData();
-                            formData.append('image', file);
-
-                            fetch('/upload-image', {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                                }
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    const range = quill.getSelection();
-                                    quill.insertEmbed(range.index, 'image', data.url);
-                                })
-                                .catch(err => console.error('Upload failed', err));
-                        } else {
-                            alert('لطفاً فقط فایل تصویر انتخاب کنید.');
+                        function setSelectValue() {
+                            const value = String(@this.get('parent_id') || '').trim();
+                            choices.removeActiveItems();
+                            if (value) choices.setChoiceByValue(value);
                         }
-                    };
-                }
 
-                quill.getModule('toolbar').addHandler('image', imageHandler);
-            });
+                        // مقدار اولیه
+                        setSelectValue();
 
-            // ✅ اینجا میتونی راحت به quill دسترسی داشته باشی
-            document.addEventListener("livewire:initialized", () => {
-                Livewire.on("close_modal", () => {
-                    if (quill) {
-                        quill.setText('');
-                    }
-                    document.getElementById('close_modal').click()
-                });
-                Livewire.on("update_item", () => {
-                    if (quill) {
-                        quill.clipboard.dangerouslyPasteHTML(@this.get('description'));
+                        // هر بار Livewire render شد
+                        Livewire.hook('message.processed', () => {
+                            setSelectValue();
+                        });
+                        selectEl.addEventListener('change', () => {
+                        @this.set('parent_id', selectEl.value);
+                        });
 
-                    }
-                    setSelectValue(@this.get('parent_id'));
+                        var toolbarOptions = [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            [{ 'font': [] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['blockquote', 'code-block'],
 
-                });
-                Livewire.on("reset_modal_data", () => {
-                    if (quill) {
-                        quill.setText('');
-                    }
+                            [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ 'direction': 'rtl' }],
 
-                });
-            });
-            function setSelectValue(value) {
-                $('#select').val(value);
-                $('#select').formSelect();
-                @this.set('parent_id', value);
-            }
-        </script>
+                            [{ 'size': ['small', false, 'large', 'huge'] }],
 
-@endsection
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'align': [] }],
+
+                            ['image', 'video'],
+                            ['clean']
+                        ];
+                        const quill = new Quill('#editor', {
+                            theme: 'snow',
+                            modules: {
+                                toolbar: {
+                                    container:toolbarOptions,
+                                    handlers: {
+                                        image: imageHandler
+                                    }
+                                }
+                            }
+                        });
+
+                        quill.root.innerHTML = @this.get('description') || '';
+                        quill.on('text-change', function () {
+                            const html = quill.root.innerHTML;
+                            @this.set('description', html);
+                        });
+                        function imageHandler() {
+                            const input = document.createElement('input');
+                            input.setAttribute('type', 'file');
+                            input.setAttribute('accept', 'image/*');
+                            input.click();
+
+                            input.onchange = async () => {
+                                const file = input.files[0];
+                                if (!file) return;
+                                savedRange = quill.getSelection(true);
+
+                            @this.upload('tempImage', file, () => {}, () => {
+                                alert('Image upload failed.');
+                            });
+                            };
+                        }
+                        Livewire.on('imageUploaded', (urlArray) => {
+                            const url = Array.isArray(urlArray) ? urlArray[0] : urlArray;
+                            console.log('✅ Image URL:', url);
+
+                            if (savedRange) {
+                                quill.insertEmbed(savedRange.index, 'image', url);
+                            } else {
+                                quill.insertEmbed(quill.getLength(), 'image', url);
+                            }
+
+                            quill.setSelection(quill.getLength());
+                        @this.set('description', quill.root.innerHTML);
+                        });
+
+                        Livewire.on("close_modal", () => {
+                            if (quill) quill.setText('');
+                                 const myModal = bootstrap.Modal.getInstance(document.getElementById('modaldemo8'));
+                            if (myModal) {
+                                myModal.hide();
+                            }
+                        });
+
+                        Livewire.on("update_item", () => {
+                            if (quill) {
+                                quill.clipboard.dangerouslyPasteHTML(@this.get('description'));
+
+                            }
+                            setSelectValue()
+
+                        });
+                        Livewire.on("reset_modal_data", () => {
+                            if (quill) {
+                                quill.setText('');
+                            }
+
+                        });
+
+                    });
+
+                </script>
+
+        @endsection
 </div>

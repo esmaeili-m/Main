@@ -1,84 +1,111 @@
 <div>
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="d-flex justify-content-between align-items-center p-4">
-                    <h5>{{$title_page ?? 'UNKNOW'}}</h5>
-
-                    <div class="btns-table d-flex gap-2">
-                        <button data-toggle="modal" data-target="#create" type="button" class="btn-hover btn-sm btn-border-radius color-5">ایجاد تگ</button>
-                        <button class="btn-hover btn-sm btn-border-radius color-4">سطل آشغال</button>
+    @section('breadcrumb')
+        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+            <h1 class="page-title fw-semibold fs-18 mb-0">Tags</h1>
+            <div class="ms-md-1 ms-0">
+                <nav>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active" aria-current="page">Tags</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    @endsection
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">
+                        Tags Item
+                    </div>
+                    <div class="prism-toggle">
+                        <button wire:click="resetData()" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" class="btn btn-sm btn-success-light">Create New Tag<i class="ri-plus ms-2 d-inline-block align-middle"></i></button>
+                        <button class="btn btn-sm btn-warning-light">Trash<i class="ri-delete ms-2 d-inline-block align-middle"></i></button>
                     </div>
                 </div>
-                <hr>
-                <div class="body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>نام تگ</th>
-                            <th>عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php($counter=1)
-                        @foreach($data ?? [] as $item)
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
                             <tr>
-                                <th scope="row">{{$counter}}</th>
-                                <td>{{$item->name}}</td>
-
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Actions</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @php($counter=1)
+                            @foreach($data ?? [] as  $item)
+                                <tr>
+                                    <th scope="row">{{$counter}}</th>
+                                    <td>{{$item->name}}</td>
+                                    <td>
+                                        <div class="hstack gap-2 flex-wrap">
+                                            <a data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" wire:click="set_item({{$item->id}})"  class="text-info fs-14 lh-1"><i
+                                                    class="ri-edit-line"></i></a>
+                                            <a  wire:click="remove_item({{$item->id}})"  href="javascript:void(0);" class="text-danger fs-14 lh-1"><i
+                                                    class="ri-delete-bin-5-line"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @php($counter++)
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="create" tabindex="-1" role="dialog"
-         aria-labelledby="formModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content modal-create">
+    <div wire:ignore.self class="modal fade"  id="modaldemo8">
+        <div class="modal-dialog modal-dialog-centered text-center  modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="formModal">{{$this->editMode ? 'ویرایش تگ' : 'ساخت تگ'}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h6 class="modal-title">{{$this->editMode ? 'Update Tag' : 'Create Tag'}}</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     <form>
-                        <div class="form-group">
-                            <label for="name">عنوان تگ</label>
-                            <input type="text" id="title" wire:model.lazy="name"
-                                   class="form-control "
-                                   placeholder="عنوان تگ را وارد کنید">
-                            @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="slug">آدرس تگ</label>
-                            <input type="text" id="slug" wire:model.lazy="slug"
-                                   class="form-control "
-                                   placeholder="آدرس تگ را وارد کنید">
-                            @error('slug')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <p class="mb-2 text-muted">Tag Title</p>
+                                <input id="title" wire:model.lazy="name" type="text" class="form-control" placeholder="Enter Title">
+                                @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <p class="mb-2 text-muted">Tag Slug</p>
+                                <input id="slug" wire:model.lazy="slug" type="text" class="form-control" placeholder="Enter slug">
+                                @error('slug')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button wire:click="create()" type="button" class="btn-hover btn-sm btn-border-radius color-5">ذخیره</button>
-                    <button wire:click="resetModal()" type="button" class="btn-hover btn-sm btn-border-radius color-2">بستن</button>
-
+                    <button wire:click="create()" class="btn btn-primary" >Save changes</button>
+                    <button wire:click="resetModal()" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
                 </div>
             </div>
         </div>
     </div>
     @section('scripts')
-        <script src="{{asset('dashboard/js/app.min.js')}}"></script>
-        <script src="{{asset('dashboard/js/admin.js')}}"></script>
-        <script src="{{asset('dashboard/js/pages/forms/basic-form-elements.js')}}"></script>
+        <script>
+            document.addEventListener("livewire:initialized", () => {
+                Livewire.on("close_modal", () => {
+                    const myModal = bootstrap.Modal.getInstance(document.getElementById('modaldemo8'));
+                    if (myModal) {
+                        myModal.hide();
+                    }
+                });
+                Livewire.on("reset_modal_data", () => {
+
+                });
+
+            });
+
+        </script>
+
     @endsection
 </div>

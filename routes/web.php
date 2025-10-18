@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/upload-image',[\App\Http\Controllers\FileUploadController::class,'quill_upload_image']);
 
 Route::get('/',\App\Livewire\Market\Index::class)->name('market');
+Route::get('/login',\App\Livewire\Market\Login\Index::class)->name('login');
 
 Route::get('/news',\App\Livewire\Market\News\Index::class)->name('news');
 Route::get('/categories/{slug}',\App\Livewire\Market\Categories\Index::class)->name('category.details');

@@ -13,6 +13,7 @@ class Index extends Component
     public int $paginate= 15;
     public $name;
     public $slug;
+    public $id;
 
     public function mount(Tag $dataModel)
     {
@@ -26,21 +27,59 @@ class Index extends Component
             'slug' => 'required|string|alpha_dash|unique:tags,slug',
         ];
     }
-
-    protected $messages = [
-        'name.required' => 'وارد کردن عنوان الزامی است.',
-        'name.string' => 'عنوان باید متن باشد.',
-
-        'slug.required' => 'وارد کردن اسلاگ الزامی است.',
-        'slug.string' => 'اسلاگ باید متن باشد.',
-    ];
-
+    public function UpdatedName()
+    {
+        if (!$this->id){
+            $this->slug=str_replace(' ','-',$this->name);
+        }
+    }
     public function create()
+    {
+        if ($this->id){
+            return $this->updateItem();
+        }else{
+            return $this->createItem();
+
+        }
+    }
+    public function createItem()
     {
         $validated = $this->validate();
         Tag::create($validated);
-        $this->name=null;
-        $this->slug=null;
+        $this->resetModal();
+
+    }
+    public function updateItem()
+    {
+        $validated = $this->validate([
+            'name' => 'required|string|min:3|max:255',
+            'slug' => 'required|string|alpha_dash|unique:categories,slug,'.$this->id,
+        ]);
+
+
+        Tag::find($this->id)->update($validated);
+        $this->resetModal();
+
+    }
+    public function set_item($id)
+    {
+        $data=$this->dataModel->find($id);
+        $this->name=$data->name;
+        $this->id=$data->id;
+        $this->slug=$data->slug;
+        $this->dispatch('update_item');
+
+    }
+    public function resetModal()
+    {
+        $this->reset(['name','slug','id']);
+        $this->dispatch('close_modal');
+    }
+
+    public function resetData()
+    {
+        $this->reset(['name','slug','id']);
+        $this->dispatch('reset_modal_data');
 
     }
     public function render()

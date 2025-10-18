@@ -1,296 +1,121 @@
 <div>
-    <aside id="leftsidebar" class="sidebar">
-        <!-- Menu -->
-        <div class="menu">
-            <ul class="list">
-                <li>
-                    <div class="sidebar-profile clearfix">
-                        <div class="profile-img">
-                            <img src="" alt="profile">
-                        </div>
-                        <div class="profile-info">
-                            <h3>{{auth()?->user()?->name ?? 'سید'}}</h3>
-                            <p>خوش آمدید !</p>
-                        </div>
-                    </div>
-                </li>
-                <li class="header">-- اصلی</li>
-                <li class="active">
-                    <a href="#" onClick="return false;" class="menu-toggle">
-                        <i class="menu-icon ti-home"></i>
-                        <span>خانه</span>
-                    </a>
-                    <ul class="ml-menu">
-                        <li class="active">
-                            <a href="index.html">داشبورد 1</a>
-                        </li>
-                        <li>
-                            <a href="pages/dashboard/dashboard2.html">داشبورد 2</a>
-                        </li>
-                        <li>
-                            <a href="pages/dashboard/dashboard3.html">داشبورد 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" {{request()->routeIs('categories.*') ? 'active' : ''}} ">
-                    <a href="{{route('categories.list')}}">
-                        <i class="menu-icon ti-menu-alt"></i>
-                        <span>دسته بندی ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('posts.*') ? 'active' : ''}} ">
-                    <a href="{{route('posts.list')}}">
-                        <i class="menu-icon ti-instagram"></i>
-                        <span>پست ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('articles.*') ? 'active' : ''}} ">
-                    <a href="{{route('articles.list')}}">
-                        <i class="menu-icon ti-book"></i>
-                        <span>مقاله ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('tags.*') ? 'active' : ''}} ">
-                    <a href="{{route('tags.list')}}">
-                        <i class="menu-icon ti-tag"></i>
-                        <span>تگ ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('events.*') ? 'active' : ''}} ">
-                    <a href="{{route('events.list')}}">
-                        <i class="menu-icon ti-calendar"></i>
-                        <span>رویداد ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('comments.*') ? 'active' : ''}} ">
-                    <a href="{{route('comments.list')}}">
-                        <i class="menu-icon ti-comment"></i>
-                        <span>نظرات ها</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('messages.*') ? 'active' : ''}} ">
-                    <a href="{{route('messages.list')}}">
-                        <i class="menu-icon ti-comment"></i>
-                        <span>پیام های دریافتی</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('sliders.*') ? 'active' : ''}} ">
-                    <a href="{{route('sliders.list')}}">
-                        <i class="menu-icon ti-layout"></i>
-                        <span>اسلایدر</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('services.*') ? 'active' : ''}} ">
-                    <a href="{{route('services.list')}}">
-                        <i class="menu-icon ti-layout"></i>
-                        <span>خدمات</span>
-                    </a>
-                </li>
-                <li class=" {{request()->routeIs('settings.*') ? 'active' : ''}} ">
-                    <a href="{{route('settings.list')}}">
-                        <i class="menu-icon ti-settings"></i>
-                        <span>تنظیمات عمومی </span>
-                    </a>
-                </li>
+    <aside class="app-sidebar sticky" id="sidebar">
 
-            </ul>
+        <!-- Start::main-sidebar-header -->
+        <div class="main-sidebar-header">
+            <a href="index.html" class="header-logo">
+                <img src="../assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
+                <img src="../assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
+                <img src="../assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
+                <img src="../assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
+            </a>
         </div>
-        <!-- #Menu -->
-    </aside>
-    <aside id="rightsidebar" class="right-sidebar">
-        <ul class="nav nav-tabs tab-nav-right" role="tablist">
-            <li role="presentation">
-                <a href="#skins" data-toggle="tab" class="active">پوسته ها</a>
-            </li>
-            <li role="presentation">
-                <a href="#settings" data-toggle="tab">تنظیمات</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane in active in active stretchLeft" id="skins">
-                <div class="demo-skin">
-                    <div class="rightSetting">
-                        <p>تنظیمات عمومی</p>
-                        <ul class="setting-list list-unstyled m-t-20">
-                            <li>
-                                <div class="form-check">
-                                    <div class="form-check m-l-10">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked> ذخیره تاریخچه
-                                            <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <div class="form-check m-l-10">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked> نمایش وضعیت
-                                            <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <div class="form-check m-l-10">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked> ثبت مسئله خودکار
-                                            <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <div class="form-check m-l-10">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked> نمایش وضعیت به همه
-                                            <span class="form-check-sign">
-                                                    <span class="check"></span>
-                                                </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="rightSetting">
-                        <p>رنگ منو نوار کناری</p>
-                        <button type="button" class="btn btn-sidebar-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                        <button type="button" class="btn btn-sidebar-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
-                    </div>
-                    <div class="rightSetting">
-                        <p>رنگ قالب</p>
-                        <button type="button" class="btn btn-theme-light btn-border-radius p-l-20 p-r-20">روشن</button>
-                        <button type="button" class="btn btn-theme-dark btn-default btn-border-radius p-l-20 p-r-20">تاریک</button>
-                    </div>
-                    <div class="rightSetting">
-                        <p>پوسته ها</p>
-                        <ul class="demo-choose-skin choose-theme list-unstyled">
-                            <li data-theme="black" class="actived">
-                                <div class="black-theme"></div>
-                            </li>
-                            <li data-theme="white">
-                                <div class="white-theme white-theme-border"></div>
-                            </li>
-                            <li data-theme="purple">
-                                <div class="purple-theme"></div>
-                            </li>
-                            <li data-theme="blue">
-                                <div class="blue-theme"></div>
-                            </li>
-                            <li data-theme="cyan">
-                                <div class="cyan-theme"></div>
-                            </li>
-                            <li data-theme="green">
-                                <div class="green-theme"></div>
-                            </li>
-                            <li data-theme="orange">
-                                <div class="orange-theme"></div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="rightSetting">
-                        <p>فضای دیسک</p>
-                        <div class="sidebar-progress">
-                            <div class="progress m-t-20">
-                                <div class="progress-bar l-bg-cyan shadow-style width-per-45" role="progressbar"
-                                     aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <span class="progress-description">
-                                    <small>26% باقی مانده</small>
-                                </span>
-                        </div>
-                    </div>
-                    <div class="rightSetting m-b-15">
-                        <p>بارگذاری سرور</p>
-                        <div class="sidebar-progress">
-                            <div class="progress m-t-20">
-                                <div class="progress-bar l-bg-orange shadow-style width-per-63" role="progressbar"
-                                     aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <span class="progress-description">
-                                    <small>بسیار بارگذاری شده</small>
-                                </span>
-                        </div>
-                    </div>
+        <!-- End::main-sidebar-header -->
+
+        <!-- Start::main-sidebar -->
+        <div class="main-sidebar" id="sidebar-scroll">
+
+            <!-- Start::nav -->
+            <nav class="main-menu-container nav nav-pills flex-column sub-open">
+                <div class="slide-left" id="slide-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane stretchRight" id="settings">
-                <div class="demo-settings">
-                    <p>تنظیمات عمومی</p>
-                    <ul class="setting-list">
-                        <li>
-                            <span>گزارش استفاده از پانل</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox" checked>
-                                    <span class="lever switch-col-green"></span>
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <span>تغییر مسیر ایمیل</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox">
-                                    <span class="lever switch-col-blue"></span>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                    <p>تنظیمات سیستم</p>
-                    <ul class="setting-list">
-                        <li>
-                            <span>اطلاعیه ها</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox" checked>
-                                    <span class="lever switch-col-purple"></span>
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <span>به روز رسانی خودکار</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox" checked>
-                                    <span class="lever switch-col-cyan"></span>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                    <p>تنظیمات حساب</p>
-                    <ul class="setting-list">
-                        <li>
-                            <span>آنلاین</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox" checked>
-                                    <span class="lever switch-col-red"></span>
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <span>مجوز محل سکونت</span>
-                            <div class="switch">
-                                <label>
-                                    <input type="checkbox">
-                                    <span class="lever switch-col-lime"></span>
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                <ul class="main-menu">
+                    <!-- Start::slide__category -->
+                    <li class="slide__category"><span class="category-name">Main</span></li>
+                    <!-- End::slide__category -->
+
+                    <li class="slide">
+                        <a href="{{ route('dashboard') }}" class="side-menu__item">
+                            <i class="bx bx-home side-menu__icon"></i>
+                            <span class="side-menu__label">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('categories.list') }}" class="side-menu__item">
+                            <i class="bx bx-category side-menu__icon"></i>
+                            <span class="side-menu__label">Categories</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('posts.list') }}" class="side-menu__item">
+                            <i class="bx bx-news side-menu__icon"></i>
+                            <span class="side-menu__label">Posts</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('articles.list') }}" class="side-menu__item">
+                            <i class="bx bx-book-content side-menu__icon"></i>
+                            <span class="side-menu__label">Articles</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('tags.list') }}" class="side-menu__item">
+                            <i class="bx bx-purchase-tag side-menu__icon"></i>
+                            <span class="side-menu__label">Tags</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('events.list') }}" class="side-menu__item">
+                            <i class="bx bx-calendar-event side-menu__icon"></i>
+                            <span class="side-menu__label">Events</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('comments.list') }}" class="side-menu__item">
+                            <i class="bx bx-comment-dots side-menu__icon"></i>
+                            <span class="side-menu__label">Comments</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('messages.list') }}" class="side-menu__item">
+                            <i class="bx bx-envelope side-menu__icon"></i>
+                            <span class="side-menu__label">Messages</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('sliders.list') }}" class="side-menu__item">
+                            <i class="bx bx-images side-menu__icon"></i>
+                            <span class="side-menu__label">Slider</span>
+                        </a>
+                    </li>
+
+                    <li class="slide active">
+                        <a href="{{ route('services.list') }}" class="side-menu__item">
+                            <i class="bx bx-slideshow side-menu__icon"></i>
+                            <span class="side-menu__label">Service</span>
+                        </a>
+                    </li>
+                    <li class="slide active">
+                        <a href="{{ route('faqs.list') }}" class="side-menu__item">
+                            <i class="bx bx-question-mark side-menu__icon"></i>
+                            <span class="side-menu__label">Faq</span>
+                        </a>
+                    </li>
+
+                    <li class="slide">
+                        <a href="{{ route('settings.list') }}" class="side-menu__item">
+                            <i class="bx bx-cog side-menu__icon"></i>
+                            <span class="side-menu__label">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path> </svg></div>
+            </nav>
+            <!-- End::nav -->
+
         </div>
+        <!-- End::main-sidebar -->
+
     </aside>
+
+
 </div>

@@ -88,27 +88,6 @@ class Index extends Component
         ];
     }
 
-    protected $messages = [
-        'title.required' => 'وارد کردن عنوان الزامی است.',
-        'title.string' => 'عنوان باید متن باشد.',
-        'title.min' => 'عنوان نباید کمتر از ۳ کاراکتر باشد.',
-        'title.max' => 'عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد.',
-
-        'slug.required' => 'وارد کردن آدرس الزامی است.',
-        'slug.string' => 'اسلاگ باید متن باشد.',
-        'slug.alpha_dash' => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
-        'slug.unique' => 'این اسلاگ قبلاً استفاده شده است.',
-
-        'description.required' => 'وارد کردن توضیحات الزامی است.',
-        'description.string' => 'توضیحات باید متن باشد.',
-        'description.min' => 'توضیحات نباید کمتر از ۱۰ کاراکتر باشد.',
-        'description.max' => 'توضیحات نباید بیشتر از ۵۰۰ کاراکتر باشد.',
-
-        'thumbnail.required' => 'آپلود تصویر شاخص الزامی است.',
-        'thumbnail.image' => 'فایل انتخابی باید تصویر باشد.',
-        'thumbnail.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
-        'thumbnail.max' => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
-    ];
     public function change_status($id)
     {
         $data=$this->dataModel->find($id);
@@ -168,7 +147,7 @@ class Index extends Component
         $validated['thumbnail'] = $this->thumbnail->store('uploads/articles', 'public');
 
         $validated['user_id'] = auth()->id() ?? 1;
-
+        $validated['status']='published';
         if (($validated['status'] ?? null) === 'published' && empty($this->published_at)) {
             $validated['published_at'] = now();
         }
@@ -176,7 +155,7 @@ class Index extends Component
         $post= Article::create($validated);
         $post->tags()->attach($this->tags);
         $this->resetModal();
-                $this->dispatch('alert',message:'آیتم با موفقیت ایجاد شد');
+        $this->dispatch('alert',message:'آیتم با موفقیت ایجاد شد');
 
     }
     public function updateItem()
@@ -193,9 +172,12 @@ class Index extends Component
         if (isset($validated['image']) && !is_string($validated['image'])) {
             $validated['thumbnail'] = $this->image->store('uploads/articles', 'public');
         }
-        Article::find($this->id)->update($validated);
+
+        $article =Article::find($this->id);
+        $article->update($validated);
+        $article->tags()->sync($this->tags);
         $this->resetModal();
-                $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
+        $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
 
 
     }

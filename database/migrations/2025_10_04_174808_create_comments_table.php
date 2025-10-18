@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('content');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->morphs('commentable');
+            $table->bigInteger('parent_id')->nullable();
             $table->timestamps();
         });
     }

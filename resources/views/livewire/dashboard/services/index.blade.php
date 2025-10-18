@@ -1,199 +1,123 @@
 <div>
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="d-flex justify-content-between align-items-center p-4">
-                    <h5>{{$title_page ?? 'UNKNOW'}}</h5>
-
-                    <div class="btns-table d-flex gap-2">
-                        <button wire:click="resetData()" data-toggle="modal" data-target="#create" type="button" class="btn-hover btn-sm btn-border-radius color-5">ایجاد سرویس</button>
-                        <button class="btn-hover btn-sm btn-border-radius color-4">سطل آشغال</button>
+    @section('breadcrumb')
+        <div class="d-md-flex d-block align-items-center justify-content-between my-4 page-header-breadcrumb">
+            <h1 class="page-title fw-semibold fs-18 mb-0">Services</h1>
+            <div class="ms-md-1 ms-0">
+                <nav>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item active" aria-current="page">Services</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    @endsection
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card custom-card">
+                <div class="card-header justify-content-between">
+                    <div class="card-title">
+                        Services Item
+                    </div>
+                    <div class="prism-toggle">
+                        <button wire:click="resetData()" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" class="btn btn-sm btn-success-light">Create New Service<i class="ri-plus ms-2 d-inline-block align-middle"></i></button>
+                        <button class="btn btn-sm btn-warning-light">Trash<i class="ri-delete ms-2 d-inline-block align-middle"></i></button>
                     </div>
                 </div>
-                <hr>
-                <div class="body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>تصویر سرویس</th>
-                            <th>عنوان سرویس</th>
-                            <th>عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php($counter=1)
-                        @foreach($data ?? [] as $item)
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
                             <tr>
-                                <th scope="row">{{$counter}}</th>
-                                <th >
-                                    <img class="post-avatar" width="70px" height="70px" src="{{asset('storage/'.$item->image)}}">
-                                </th>
-                                <td>{{$item->title}}</td>
-                                <td>
-                                    <button data-toggle="modal" data-target="#create" wire:click="set_item({{$item->id}})" class="btn tblActnBtn">
-                                        <i class="material-icons">mode_edit</i>
-                                    </button>
-                                    <button wire:click="remove_item_post({{$item->id}})" class="btn tblActnBtn">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </td>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Actions</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @php($counter=1)
+                            @foreach($data ?? [] as  $item)
+                                <tr>
+                                    <th scope="row">{{$counter}}</th>
+                                    <td>{{$item->title}}</td>
+                                    <td>
+                                        <div class="hstack gap-2 flex-wrap">
+                                            <a data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" wire:click="set_item({{$item->id}})"  class="text-info fs-14 lh-1"><i
+                                                    class="ri-edit-line"></i></a>
+                                            <a  wire:click="remove_item({{$item->id}})"  href="javascript:void(0);" class="text-danger fs-14 lh-1"><i
+                                                    class="ri-delete-bin-5-line"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @php($counter++)
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="create" tabindex="-1" role="dialog"
-         aria-labelledby="formModal" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content modal-create">
+    <div wire:ignore.self class="modal fade"  id="modaldemo8">
+        <div class="modal-dialog modal-dialog-centered text-center  modal-xl" role="document">
+            <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="formModal">{{$this->editMode ? 'ویرایش  سرویس' : 'ساخت  سرویس'}}</h5>
-                    <button id="close_modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h6 class="modal-title">{{$this->editMode ? 'Update Service' : 'Create Service'}}</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     <form>
-                        <div class="form-group">
-                            <label for="title">عنوان  سرویس</label>
-                            <input type="text" id="title" wire:model.lazy="title"
-                                   class="form-control "
-                                   placeholder="عنوان  سرویس را وارد کنید">
-                            @error('title')
-                            <div class="invalid-feedback  d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">توضیحات  سرویس</label>
-                            <div wire:ignore>
-                                <div id="description"></div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <p class="mb-2 text-muted">Service Title</p>
+                                <input id="title" wire:model.lazy="title" type="text" class="form-control" placeholder="Enter Title">
+                                @error('title')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            @error('description')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label>تصویر  سرویس</label>
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>فایل</span>
-                                    <input wire:model.lazy="image" type="file">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
-                                </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <label for="input-file" class="form-label">Image</label>
+                                <input wire:model.lazy="image" class="form-control" type="file" id="input-file">
                                 @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12 mb-3">
+                                <label for="input-file" class="form-label">Description Post</label>
+                                <textarea class="form-control" wire:model.defer="description"></textarea>
+                                @error('description')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button wire:click="create()" type="button" class="btn-hover btn-sm btn-border-radius color-5">ذخیره</button>
-                    <button wire:click="resetModal()" type="button" class="btn-hover btn-sm btn-border-radius color-2">بستن</button>
-
+                    <button wire:click="create()" class="btn btn-primary" >Save changes</button>
+                    <button wire:click="resetModal()" class="btn btn-light" data-bs-dismiss="modal" >Close</button>
                 </div>
             </div>
         </div>
     </div>
-    @section('styles')
-        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
-        <link {{asset('dashboard/js/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css')}} rel="stylesheet" />
 
-    @endsection
     @section('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-        <script src="{{asset('dashboard/js/app.min.js')}}"></script>
-        <script src="{{asset('dashboard/js/admin.js')}}"></script>
-        <script src="{{asset('dashboard/js/pages/forms/basic-form-elements.js')}}"></script>
         <script>
-            $('select').formSelect();
-
-            document.addEventListener('livewire:initialized', function () {
-                const toolbarOptions = [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
-                    ['link', 'image'],
-                    [{ 'direction': 'rtl' }],
-                    [{ 'size': ['small', false, 'large', 'huge'] }],
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                    [{ 'align': [] }],
-                    ['clean']
-                ];
-                const quill = new Quill('#description', {
-                    modules: {
-                        toolbar: toolbarOptions,
-                    },
-                    placeholder: 'توضیحات خود راوارد کنید...',
-                    theme: 'snow'
-                });
-                quill.on('text-change', function() {
-                    let html = quill.root.innerHTML;
-                @this.set('description', html);
-                });
-                function imageHandler() {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.click();
-                    input.onchange = () => {
-                        var file = input.files[0];
-                        if (/^image\//.test(file.type)) {
-                            // آپلود به سرور
-                            var formData = new FormData();
-                            formData.append('image', file);
-
-                            fetch('/upload-image', {
-                                method: 'POST',
-                                body: formData,
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                                }
-                            })
-                                .then(response => response.json())
-                                .then(data => {
-                                    const range = quill.getSelection();
-                                    quill.insertEmbed(range.index, 'image', data.url);
-                                })
-                                .catch(err => console.error('Upload failed', err));
-                        } else {
-                            alert('لطفاً فقط فایل تصویر انتخاب کنید.');
-                        }
-                    };
-                }
-                quill.getModule('toolbar').addHandler('image', imageHandler);
+            document.addEventListener("livewire:initialized", () => {
                 Livewire.on("close_modal", () => {
-                    if (quill) {
-                        quill.setText('');
+                    const myModal = bootstrap.Modal.getInstance(document.getElementById('modaldemo8'));
+                    if (myModal) {
+                        myModal.hide();
                     }
-                    document.getElementById('close_modal').click()
                 });
-                Livewire.on("update_item", () => {
-                    if (quill) {
-                        quill.clipboard.dangerouslyPasteHTML(@this.get('description'));
-                    }
-                    let $select = $('#categorySelect');
 
-                    $select.val(@this.get('category_id'));
-                    $select.trigger('change');
-                    $select.formSelect();
+                Livewire.on("update_item", () => {
                 });
                 Livewire.on("reset_modal_data", () => {
-                    if (quill) {
-                        quill.setText('');
-                    }
 
                 });
+
             });
+
         </script>
+
     @endsection
 </div>

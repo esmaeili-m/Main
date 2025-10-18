@@ -3,15 +3,22 @@
 <livewire:dashboard.configs.head />
 
 <body class="light rtl">
+<livewire:dashboard.configs.sttings />
+
+<div class="page">
+
 <livewire:dashboard.configs.header />
-<div>
-    <livewire:dashboard.configs.header />
-</div>
-<livewire:dashboard.configs.sidebar />
-<section class="content">
-    <div class="container-fluid">
-        {{$slot}}
+    <livewire:dashboard.configs.sidebar />
+    <div class="main-content app-content">
+        <div class="container-fluid">
+            @yield('breadcrumb')
+                {{$slot}}
+        </div>
     </div>
-</section>
+</div>
+<div class="scrollToTop">
+    <span class="arrow"><i class="ri-arrow-up-s-fill fs-20"></i></span>
+</div>
+<div id="responsive-overlay"></div>
 <livewire:dashboard.configs.foot />
 </body>

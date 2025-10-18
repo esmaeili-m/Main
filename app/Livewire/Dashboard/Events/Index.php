@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Dashboard\Events;
 
+
 use App\Models\Event;
 use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\ValidationException;
 
 class Index extends Component
 {
@@ -86,60 +88,16 @@ class Index extends Component
             'slug'         => 'required|string|alpha_dash|unique:events,slug',
             'description'  => 'required|string|min:10|max:500',
             'content'      => 'nullable|string',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'        => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_url'    => 'nullable|url',
             'event_date'   => 'required|date|after_or_equal:today',
-            'event_time'   => 'nullable|date_format:H:i:s',
+            'event_time'   => 'nullable',
             'location'     => 'nullable|string|max:255',
             'category_id'  => 'nullable|exists:categories,id',
         ];
 
     }
 
-    protected $messages = [
-        // 🟩 عنوان
-        'title.required' => 'وارد کردن عنوان رویداد الزامی است.',
-        'title.string'   => 'عنوان باید به صورت متن باشد.',
-        'title.min'      => 'عنوان باید حداقل ۳ کاراکتر باشد.',
-        'title.max'      => 'عنوان نمی‌تواند بیش از ۲۵۵ کاراکتر باشد.',
-
-        // 🟩 اسلاگ
-        'slug.required'    => 'وارد کردن اسلاگ الزامی است.',
-        'slug.string'      => 'اسلاگ باید به صورت متن باشد.',
-        'slug.alpha_dash'  => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
-        'slug.unique'      => 'این اسلاگ قبلاً استفاده شده است.',
-
-        // 🟩 توضیحات کوتاه
-        'description.string' => 'توضیحات باید به صورت متن باشد.',
-        'description.min'    => 'توضیحات باید حداقل ۱۰ کاراکتر باشد.',
-        'description.max'    => 'توضیحات نمی‌تواند بیش از ۵۰۰ کاراکتر باشد.',
-
-        // 🟩 محتوا
-        'content.string' => 'متن کامل باید به صورت رشته‌ای از نوع متن باشد.',
-
-        // 🟩 تصویر
-        'image.image' => 'فایل انتخابی باید تصویر باشد.',
-        'image.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
-        'image.max'   => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
-
-        // 🟩 ویدیو
-        'video_url.url' => 'آدرس ویدیو معتبر نیست.',
-
-        // 🟩 تاریخ و ساعت رویداد
-        'event_date.required'        => 'تاریخ برگزاری الزامی است.',
-        'event_date.date'            => 'تاریخ باید معتبر باشد.',
-        'event_date.after_or_equal'  => 'تاریخ برگزاری نمی‌تواند قبل از امروز باشد.',
-        'event_time.date_format'     => 'فرمت ساعت برگزاری باید به صورت HH:MM باشد.',
-
-        // 🟩 محل برگزاری
-        'location.string' => 'محل برگزاری باید متن باشد.',
-        'location.max'    => 'طول متن محل برگزاری نباید بیشتر از ۲۵۵ کاراکتر باشد.',
-
-        // 🟩 دسته‌بندی
-        'category_id.exists' => 'دسته‌بندی انتخاب‌شده معتبر نیست.',
-
-
-    ];
     public function change_status($id)
     {
         $data=$this->dataModel->find($id);
@@ -213,59 +171,19 @@ class Index extends Component
     }
     public function updateItem()
     {
-        $validated = $this->validate([
-            'title' => 'required|string|min:3|max:255',
-            'slug' => 'required|string|alpha_dash|unique:events,slug,'.$this->id,
-            'description' => 'required|string|min:10|max:500',
-            'content' => 'nullable|string',
-            'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'video_url'    => 'nullable|url',
-            'event_date'   => 'required|date|after_or_equal:today',
-            'event_time'   => 'nullable|date_format:H:i:s',
-            'location'     => 'nullable|string|max:255',
-            'category_id'  => 'nullable|exists:categories,id',
+            $validated = $this->validate([
+                'title' => 'required|string|min:3|max:255',
+                'slug' => 'required|string|alpha_dash|unique:events,slug,'.$this->id,
+                'description' => 'required|string|min:10|max:500',
+                'content' => 'nullable|string',
+                'image' => 'required',
+                'video_url' => 'nullable|url',
+                'event_date' => 'required|date|after_or_equal:today',
+                'event_time' => 'nullable',
+                'location' => 'nullable|string|max:255',
+                'category_id' => 'nullable|exists:categories,id',
+            ]);
 
-        ],[
-            'title.required' => 'وارد کردن عنوان رویداد الزامی است.',
-            'title.string'   => 'عنوان باید به صورت متن باشد.',
-            'title.min'      => 'عنوان باید حداقل ۳ کاراکتر باشد.',
-            'title.max'      => 'عنوان نمی‌تواند بیش از ۲۵۵ کاراکتر باشد.',
-
-            // 🟩 اسلاگ
-            'slug.required'    => 'وارد کردن اسلاگ الزامی است.',
-            'slug.string'      => 'اسلاگ باید به صورت متن باشد.',
-            'slug.alpha_dash'  => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
-            'slug.unique'      => 'این اسلاگ قبلاً استفاده شده است.',
-
-            // 🟩 توضیحات کوتاه
-            'description.string' => 'توضیحات باید به صورت متن باشد.',
-            'description.min'    => 'توضیحات باید حداقل ۱۰ کاراکتر باشد.',
-            'description.max'    => 'توضیحات نمی‌تواند بیش از ۵۰۰ کاراکتر باشد.',
-
-            // 🟩 محتوا
-            'content.string' => 'متن کامل باید به صورت رشته‌ای از نوع متن باشد.',
-
-            // 🟩 تصویر
-            'image.image' => 'فایل انتخابی باید تصویر باشد.',
-            'image.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
-            'image.max'   => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
-
-            // 🟩 ویدیو
-            'video_url.url' => 'آدرس ویدیو معتبر نیست.',
-
-            // 🟩 تاریخ و ساعت رویداد
-            'event_date.required'        => 'تاریخ برگزاری الزامی است.',
-            'event_date.date'            => 'تاریخ باید معتبر باشد.',
-            'event_date.after_or_equal'  => 'تاریخ برگزاری نمی‌تواند قبل از امروز باشد.',
-            'event_time.date_format'     => 'فرمت ساعت برگزاری باید به صورت HH:MM باشد.',
-
-            // 🟩 محل برگزاری
-            'location.string' => 'محل برگزاری باید متن باشد.',
-            'location.max'    => 'طول متن محل برگزاری نباید بیشتر از ۲۵۵ کاراکتر باشد.',
-
-            // 🟩 دسته‌بندی
-            'category_id.exists' => 'دسته‌بندی انتخاب‌شده معتبر نیست.',
-        ]);
         if (!$this->category_id){
             $validated['category_id']=null;
         }

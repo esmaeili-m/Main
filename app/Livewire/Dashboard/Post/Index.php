@@ -92,34 +92,11 @@ class Index extends Component
         ];
     }
 
-    protected $messages = [
-        'title.required' => 'وارد کردن عنوان الزامی است.',
-        'title.string' => 'عنوان باید متن باشد.',
-        'title.min' => 'عنوان نباید کمتر از ۳ کاراکتر باشد.',
-        'title.max' => 'عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد.',
-
-        'slug.required' => 'وارد کردن آدرس الزامی است.',
-        'slug.string' => 'اسلاگ باید متن باشد.',
-        'slug.alpha_dash' => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
-        'slug.unique' => 'این اسلاگ قبلاً استفاده شده است.',
-
-        'description.required' => 'وارد کردن توضیحات الزامی است.',
-        'description.string' => 'توضیحات باید متن باشد.',
-        'description.min' => 'توضیحات نباید کمتر از ۱۰ کاراکتر باشد.',
-        'description.max' => 'توضیحات نباید بیشتر از ۵۰۰ کاراکتر باشد.',
-
-        'thumbnail.required' => 'آپلود تصویر شاخص الزامی است.',
-        'thumbnail.image' => 'فایل انتخابی باید تصویر باشد.',
-        'thumbnail.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
-        'thumbnail.max' => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
-
-        'video_url.url' => 'لینک ویدیو باید معتبر باشد.',
-
-    ];
     public function change_status($id)
     {
         $data=$this->dataModel->find($id);
         if ($data->status=='published'){
+
             $data->update(['status'=>'draft']);
         }else{
             $data->update(['status'=>'published']);
@@ -200,7 +177,9 @@ class Index extends Component
         if (isset($validated['image']) && !is_string($validated['image'])) {
             $validated['image'] = $this->image->store('uploads/posts', 'public');
         }
-        Post::find($this->id)->update($validated);
+        $post = Post::find($this->id);
+        $post->update($validated);
+        $post->tags()->sync($this->tags);
         $this->resetModal();
 
     }

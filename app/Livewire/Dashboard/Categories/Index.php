@@ -9,7 +9,7 @@ use Livewire\WithFileUploads;
 class Index extends Component
 {
     use WithFileUploads;
-    public string $title_page;
+        public string $title_page;
     public Category $dataModel;
     public bool $editMode= false;
     public bool $IsFillter= false;
@@ -42,27 +42,6 @@ class Index extends Component
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
-
-    protected $messages = [
-        'title.required' => 'وارد کردن عنوان الزامی است.',
-        'title.string' => 'عنوان باید متن باشد.',
-        'title.min' => 'عنوان نباید کمتر از ۳ کاراکتر باشد.',
-        'title.max' => 'عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد.',
-
-        'slug.required' => 'وارد کردن اسلاگ الزامی است.',
-        'slug.string' => 'اسلاگ باید متن باشد.',
-        'slug.alpha_dash' => 'اسلاگ فقط می‌تواند شامل حروف، عدد، خط تیره و زیرخط باشد.',
-        'slug.unique' => 'این اسلاگ قبلاً استفاده شده است.',
-
-        'description.required' => 'وارد کردن توضیحات الزامی است.',
-        'description.string' => 'توضیحات باید متن باشد.',
-        'description.min' => 'توضیحات نباید کمتر از ۱۰ کاراکتر باشد.',
-
-        'image.required' => 'آپلود تصویر الزامی است.',
-        'image.image' => 'فایل انتخابی باید تصویر باشد.',
-        'image.mimes' => 'تصویر باید یکی از فرمت‌های jpeg، png، jpg یا gif باشد.',
-        'image.max' => 'حجم تصویر نباید بیشتر از ۲ مگابایت باشد.',
-    ];
 
     public function change_status($id)
     {
@@ -137,7 +116,13 @@ class Index extends Component
         $this->resetModal();
         $this->dispatch('alert',message:'آیتم با موفقیت ایجاد شد');
     }
-
+    public $tempImage;
+    public function updatedTempImage()
+    {
+        $path = $this->tempImage->store('uploads/categories', 'public');
+        $url = asset('storage/' . $path);
+        $this->dispatch('imageUploaded', $url);
+    }
     public function updateItem()
     {
         $validated = $this->validate([
@@ -153,7 +138,7 @@ class Index extends Component
         }
         Category::find($this->id)->update($validated);
         $this->resetModal();
-        $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
+//        $this->dispatch('alert',message:'آیتم با موفقیت آپدیت شد');
 
 
     }

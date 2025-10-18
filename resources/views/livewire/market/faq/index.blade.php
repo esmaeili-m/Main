@@ -31,19 +31,19 @@
                 <div class="col-lg-12 mt--50">
                     <div class="faq-inner-wrapper-one project-detils">
                         <div class="accordion" id="accordionExample">
-                            @foreach(\App\Models\Faq::where('status',1)->get() as $fqa)
+                            @foreach(\App\Models\Faq::where('status',1)->get() as $faq)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             {{$faq->question}}
                                         </button>
                                     </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                                    <div id="collapseOne" class="accordion-collapse collapse {{$loop->first ? 'show' : ''}}" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
 
                                             <div class="right-area">
                                                 <p class="disc mb--20">
-                                                    {{$faq->answer}}
+                                                    {!! $faq->answer !!}
 
                                                 </p>
                                                 <a href="#" class="rts-btn btn-primary">Contact Me</a>
