@@ -80,12 +80,17 @@
                                         <option value="aparat">aparat</option>
                                         <option value="telegram">telegram</option>
                                         <option value="whatsapp">whatsapp</option>
+                                        <option value="youtube">youtube</option>
+                                        <option value="vimeo">vimeo</option>
+                                        <option value="tiktok">tiktok</option>
+                                        <option value="pinterest">pinterest</option>
+                                        <option value="snapchat">snapchat</option>
+                                        <option value="medium">medium</option>
                                         <option value="address">address</option>
                                         <option value="email">email</option>
-                                        <option value="phone"> phone</option>
+                                        <option value="phone">phone</option>
                                         <option value="twitter">twitter</option>
                                         <option value="linkedin">linkedin</option>
-                                        <option value="instagram">instagram</option>
                                     </select>
                                 </div>
 

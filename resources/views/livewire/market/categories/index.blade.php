@@ -1,4 +1,38 @@
 <div>
+    @section('title', $category->title)
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="{{ strip_tags($category->description) }}">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/categories/'.$category->slug) }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta -->
+        <meta property="og:title" content="{{ $category->title }}">
+        <meta property="og:description" content="{{ strip_tags($category->description) }}">
+        <meta property="og:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/categories/'.$category->slug) }}">
+        <meta property="og:type" content="website">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $category->title }}">
+        <meta name="twitter:description" content="{{ strip_tags($category->description) }}">
+        <meta name="twitter:image" content="{{ asset('market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
+
     <div class="rts-project-area-main-wrapper rts-section-gapTop">
         <div class="container">
             <div class="row">

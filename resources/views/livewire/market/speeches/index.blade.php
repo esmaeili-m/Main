@@ -1,4 +1,37 @@
 <div>
+    @section('title','Speeches')
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="Explore speeches by Syed Muhammad Ali Jaffery on Quranic studies, Nahjul Balagha, theology, personal development, and spiritual guidance.">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/speeches') }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta -->
+        <meta property="og:title" content="Speeches | Syed Muhammad Ali Jaffery">
+        <meta property="og:description" content="Browse a collection of speeches by Syed Muhammad Ali Jaffery, covering Quranic studies, Nahjul Balagha, and personal development.">
+        <meta property="og:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/speeches') }}">
+        <meta property="og:type" content="website">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Speeches | Syed Muhammad Ali Jaffery">
+        <meta name="twitter:description" content="Collection of speeches by Syed Muhammad Ali Jaffery on Quranic studies, Nahjul Balagha, theology, and personal development.">
+        <meta name="twitter:image" content="{{ asset('market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="rts-project-area-main-wrapper rts-section-gapTop">
         <div class="container">
             <div class="row">

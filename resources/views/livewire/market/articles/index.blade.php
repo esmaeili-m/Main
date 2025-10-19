@@ -1,4 +1,37 @@
 <div>
+    @section('title','Articles')
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="This page features specialized articles on Quranic studies, Nahjul Balagha, theology, and personal development by Syed Muhammad Ali Jaffery.">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/articles') }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta (Facebook, LinkedIn, WhatsApp, etc.) -->
+        <meta property="og:title" content="Articles | Syed Muhammad Ali Jaffery">
+        <meta property="og:description" content="Explore specialized articles on Quranic studies, Nahjul Balagha, theology, and personal development.">
+        <meta property="og:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/articles') }}">
+        <meta property="og:type" content="website">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Articles | Syed Muhammad Ali Jaffery">
+        <meta name="twitter:description" content="Specialized articles on Quranic studies, Nahjul Balagha, theology, and personal development by Syed Muhammad Ali Jaffery.">
+        <meta name="twitter:image" content="{{ asset('market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="rts-breadcrumb-area">
         <div class="container">
             <div class="row">

@@ -31,7 +31,7 @@
                     <div class="contact-form-p">
 
 
-                        <form wire:submit.prevent="submit" class="form__content" id="contact-form">
+                        <form wire:submit="submit" class="form__content" id="contact-form">
                             <h4 class="title">Login Admin</h4>
 
                             <input style="margin-bottom: 10px"  class="@error('email') is-invalid @enderror"  wire:model.defer="email" type="text" placeholder="Your Email">

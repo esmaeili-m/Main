@@ -16,7 +16,7 @@
                             </div>
                             <div class="right">
                                 <ul class="top-nav">
-{{--                                    <li><a href="{{route('news')}}">Company news</a></li>--}}
+                                    <li><a href="{{route('services')}}">Activities</a></li>
                                     <li><a href="{{route('faq')}}">Faq</a></li>
                                     <li><a href="{{route('contact')}}">Contact</a></li>
                                 </ul>

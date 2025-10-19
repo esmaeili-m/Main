@@ -1,4 +1,37 @@
 <div>
+    @section('title', $post->title)
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="{{ strip_tags($post->description) }}">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/speeches/'.$post->slug) }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta -->
+        <meta property="og:title" content="{{ $post->title }}">
+        <meta property="og:description" content="{{ strip_tags($post->description) }}">
+        <meta property="og:image" content="{{ asset($post->thumbnail ?? 'market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/speeches/'.$post->slug) }}">
+        <meta property="og:type" content="article">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $post->title }}">
+        <meta name="twitter:description" content="{{ strip_tags($post->description) }}">
+        <meta name="twitter:image" content="{{ asset($post->thumbnail ?? 'market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="partner-breadcrumb bg_image" style=" background-position: center center;background-image: url({{asset('market/images/speeches/main.jpg')}})">
         <div class="container">
             <div class="row">

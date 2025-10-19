@@ -1,4 +1,37 @@
 <div>
+    @section('title','Contact')
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="Get in touch with Syed Muhammad Ali Jaffery for guidance, spiritual mentorship, and inquiries about Quranic studies, Nahjul Balagha, and personal development.">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/contact') }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta -->
+        <meta property="og:title" content="Contact | Syed Muhammad Ali Jaffery">
+        <meta property="og:description" content="Reach out to Syed Muhammad Ali Jaffery for spiritual guidance, Quranic education, and community mentorship.">
+        <meta property="og:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/contact') }}">
+        <meta property="og:type" content="website">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Contact | Syed Muhammad Ali Jaffery">
+        <meta name="twitter:description" content="Connect with Syed Muhammad Ali Jaffery for guidance on Quranic studies, Nahjul Balagha, theology, and personal development.">
+        <meta name="twitter:image" content="{{ asset('market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="rts-breadcrumb-area">
         <div class="container">
             <div class="row">

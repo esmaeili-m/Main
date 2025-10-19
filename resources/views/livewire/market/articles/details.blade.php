@@ -1,4 +1,37 @@
 <div>
+    @section('title', $article->title)
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="{{ $article->description }}">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/articles/'.$article->slug) }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta (Facebook, LinkedIn, WhatsApp, etc.) -->
+        <meta property="og:title" content="{{ $article->title }}">
+        <meta property="og:description" content="{{ $article->description }}">
+        <meta property="og:image" content="{{ asset($article->image ?? 'market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url('/articles/'.$article->slug) }}">
+        <meta property="og:type" content="article">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $article->title }}">
+        <meta name="twitter:description" content="{{ $article->description }}">
+        <meta name="twitter:image" content="{{ asset($article->thumbnail ?? 'market/images/about/me.png') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="{{ $article->author ?? 'Syed Muhammad Ali Jaffery' }}">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="blog-details-banner-large-image" style="background-image: url({{asset('storage/'.$article->thumbnail)}})">
 
     </div>

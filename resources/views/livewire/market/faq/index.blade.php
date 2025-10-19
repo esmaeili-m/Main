@@ -1,4 +1,37 @@
 <div>
+    @section('title','FAQ')
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- 🏷️ SEO Meta Tags -->
+        <meta name="description" content="Frequently Asked Questions about Syed Muhammad Ali Jaffery’s services, Quranic studies, Nahjul Balagha, theology, and personal development. Find answers to common inquiries here.">
+        <meta name="robots" content="index, follow">
+
+        <!-- 🧭 Canonical -->
+        <link rel="canonical" href="{{ url('/faq') }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+        <!-- 🌍 Open Graph Meta -->
+        <meta property="og:title" content="FAQ | Syed Muhammad Ali Jaffery">
+        <meta property="og:description" content="Find answers to frequently asked questions about Quranic studies, Nahjul Balagha, personal development, and spiritual guidance by Syed Muhammad Ali Jaffery.">
+        <meta property="og:image" content="{{ asset('market/images/news/165279.jpg') }}">
+        <meta property="og:url" content="{{ url('/faq') }}">
+        <meta property="og:type" content="website">
+
+        <!-- 🐦 Twitter Card Meta -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="FAQ | Syed Muhammad Ali Jaffery">
+        <meta name="twitter:description" content="Get answers to common questions about Syed Muhammad Ali Jaffery’s services, Quranic studies, Nahjul Balagha, and personal development.">
+        <meta name="twitter:image" content="{{ asset('market/images/news/165279.jpg') }}">
+
+        <!-- ✍️ Additional Meta -->
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
+
     <div class="partner-breadcrumb bg_image" style="background-image: url({{asset('market/images/news/165279.jpg')}})">
         <div class="container">
             <div class="row">

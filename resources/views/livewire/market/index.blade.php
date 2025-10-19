@@ -1,4 +1,26 @@
 <div>
+    @section('title','Home')
+    @section('meta_tag')
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-language" content="en">
+        <meta name="description" content="Syed Muhammad Ali Jaffery — Pakistani Arab American scholar bridging technology, theology, and service. Offering Quranic education, Nahjul Balagha studies, and spiritual mentorship toward self and divine recognition.">
+        <meta name="keywords" content="Holy Quran, Nahjul Balagha, Belief, Theology, Personal Development, Social Events, Islamic Education, Shia Scholar, Syed Muhammad Ali Jaffery">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="{{ url()->current() }}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <meta property="og:title" content="Syed Muhammad Ali Jaffery | Faith, Knowledge & Community">
+        <meta property="og:description" content="A Pakistani Arab American scholar and community leader dedicated to Quranic studies, Nahjul Balagha, theology, and personal spiritual development.">
+        <meta property="og:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:type" content="website">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Syed Muhammad Ali Jaffery | Scholar & Community Leader">
+        <meta name="twitter:description" content="Teaching Quran, Nahjul Balagha, theology, and self-recognition to empower communities worldwide.">
+        <meta name="twitter:image" content="{{ asset('market/images/about/me.png') }}">
+        <meta name="author" content="Syed Muhammad Ali Jaffery">
+        <meta name="theme-color" content="#0b132b">
+    @endsection
     <div class="banner-swiper-two">
         <div class="swiper mySwiper-banner-two">
             <div class="swiper-wrapper" wire:ignore>

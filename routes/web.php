@@ -27,7 +27,8 @@ Route::get('/posts',\App\Livewire\Market\Speeches\Index::class)->name('posts');
 Route::get('/post/{slug}',\App\Livewire\Market\Speeches\Details::class)->name('post.details');
 
 Route::get('/contact',\App\Livewire\Market\Contact\Index::class)->name('contact');
-Route::get('/service',\App\Livewire\Market\Services\Index::class)->name('services');
+Route::get('/activities',\App\Livewire\Market\Services\Index::class)->name('services');
+Route::get('/Activities/{slug}',\App\Livewire\Market\Services\Details::class)->name('service.details');
 
 Route::get('/speeches',\App\Livewire\Market\Speeches\Index::class)->name('speeches');
 
