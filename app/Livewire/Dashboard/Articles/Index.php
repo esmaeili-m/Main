@@ -169,10 +169,9 @@ class Index extends Component
             'thumbnail' => 'required',
         ]);
 
-        if (isset($validated['image']) && !is_string($validated['image'])) {
-            $validated['thumbnail'] = $this->image->store('uploads/articles', 'public');
+        if (isset($validated['thumbnail']) && !is_string($validated['thumbnail'])) {
+            $validated['thumbnail'] = $this->thumbnail->store('uploads/articles', 'public');
         }
-
         $article =Article::find($this->id);
         $article->update($validated);
         $article->tags()->sync($this->tags);

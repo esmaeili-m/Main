@@ -20,7 +20,7 @@
                     </div>
                     <div class="prism-toggle">
                         <button wire:click="resetData()" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8" class="btn btn-sm btn-success-light">Create New Service<i class="ri-plus ms-2 d-inline-block align-middle"></i></button>
-                        <button class="btn btn-sm btn-warning-light">Trash<i class="ri-delete ms-2 d-inline-block align-middle"></i></button>
+{{--                        <button class="btn btn-sm btn-warning-light">Trash<i class="ri-delete ms-2 d-inline-block align-middle"></i></button>--}}
                     </div>
                 </div>
                 <div class="card-body">

@@ -10,9 +10,7 @@
                                     <a href="mailto:{{$settings['email'] ?? '#'}}"><i class="fal fa-envelope"></i>
                                         {{$settings['email'] ?? '#'}}</a>
                                 </div>
-                                <div class="working-time">
-                                    <p><i class="fal fa-clock"></i> Working: 8.00am - 5.00pm</p>
-                                </div>
+
                             </div>
                             <div class="right">
                                 <ul class="top-nav">

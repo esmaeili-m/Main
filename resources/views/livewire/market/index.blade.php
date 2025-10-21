@@ -79,7 +79,7 @@
                             <img style="border-radius: 20px" src="{{asset('market')}}/images/about/me.jpeg" alt="small">
                         </div>
                         <div class="counter-about-area">
-                            <h2 class="counter title"><span class="odometer" data-count="25">00</span>+
+                            <h2 class="counter title"><span class="odometer" data-count="15">00</span>+
                             </h2>
                             <span>Year of experience</span>
                         </div>
@@ -90,7 +90,7 @@
                         <div class="title-style-two left">
                             <span class="bg-content">About Me</span>
                             <span class="pre">More About Me</span>
-                            <h2 class="title rts-text-anime-style-1">Seyed Ali Shah
+                            <h2 class="title rts-text-anime-style-1">Seyed Ali Sأhah
                             </h2>
                         </div>
                         <div class="about-between-wrapper">
@@ -227,12 +227,12 @@
                                     <div class="swiper-slide">
                                         <div class="single-blog-area-one">
                                             <p>{{$article->title}}</p>
-                                            <a href="blog-details.html">
-                                                <h4 class="title">{{$article->description}}</h4>
+                                            <a href="{{route('article.details',$article->slug)}}">
+                                                    <p style="font-size: 18px" class="font-bold clamp">{{$article->description}}</p>
                                             </a>
                                             <div class="bottom-details">
-                                                <a href="blog-details.html" class="thumbnail">
-                                                    <img src="{{asset('storage/'.$article->thumbnail)}}" alt="blog-area">
+                                                <a href="{{route('article.details',$article->slug)}}" class="thumbnail">
+                                                    <img style="height: 263px;" src="{{asset('storage/'.$article->thumbnail)}}" alt="blog-area">
                                                 </a>
                                             </div>
                                         </div>
@@ -263,11 +263,11 @@
                 @foreach(\App\Models\Post::where('status','published')->with('category')->latest()->take(4)->get() as $post)
                     <div class="col-lg-6">
                         <div class="single-project-style-three">
-                            <a href="#" class="thumbnail">
+                            <a href="{{route('post.details',$post->slug)}}" class="thumbnail">
                                 <img style="border-radius: 20px" src="{{asset('storage/'.$post->thumbnail)}}" alt="project">
                             </a>
                             <div class="inner-content">
-                                <a href="#">
+                                <a href="{{route('post.details',$post->slug)}}">
                                     <h4 class="title">{{$post->title}}</h4>
                                 </a>
                                 <span>{{$post->category?->title}}</span>

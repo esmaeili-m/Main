@@ -12,6 +12,14 @@
         <link rel="stylesheet" href="{{asset('market')}}/css/plugins/odometer.css">
         <link rel="stylesheet" href="{{asset('market')}}/css/vendor/bootstrap.min.css">
         <link rel="stylesheet" href="{{asset('market')}}/css/style.css">
+        <style>
+            .clamp {
+                display: -webkit-box;        /* مهم: برای فعال کردن خط چندتایی */
+                -webkit-box-orient: vertical; /* جهت چیدن خطوط */
+                -webkit-line-clamp: 3;       /* تعداد خطوطی که میخوای */
+                overflow: hidden;             /* متن اضافی مخفی می‌شه */
+            }
+        </style>
         @yield('meta_tag')
         @yield('styles')
         @livewireStyles
